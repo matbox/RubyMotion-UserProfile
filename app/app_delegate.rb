@@ -2,7 +2,8 @@ class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
 
-    @user = User.new(
+    @user = User.load
+    @user ||= User.new(
         id: "123",
         name: "Matthias",
         email: "matthias@example.com",
@@ -16,5 +17,9 @@ class AppDelegate
     @window.makeKeyAndVisible
 
     true
+  end
+
+  def applicationDidEnterBackground(application)
+    @user.save
   end
 end
